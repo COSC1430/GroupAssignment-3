@@ -36,6 +36,7 @@ int main()
 				exit(0);
 		default: 
 			cout << "Wrong Choice" << endl;
+			cout << endl;
 		}
 	} 
 }
