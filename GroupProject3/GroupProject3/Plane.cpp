@@ -1,9 +1,6 @@
 #include <iostream>
-#include <iomanip>
 #include "Plane.h"
 using namespace std;
-
-
 
 plane::plane()
 {
@@ -39,7 +36,6 @@ plane::plane()
 			first_class_[i][j].status = '-';
 			first_class_[i][j].is_booked = false;
 		}
-
 	}
 
 	economy_ = new seat*[econ_rows_];
@@ -79,7 +75,6 @@ plane::plane(int f_row, int f_col, int e_row, int e_col)
 			first_class_[i][j].status = '-';
 			first_class_[i][j].is_booked = false;
 		}
-
 	}
 
 	economy_ = new seat*[econ_rows_];
@@ -98,7 +93,6 @@ plane::plane(int f_row, int f_col, int e_row, int e_col)
 	}
 }
 
-
 void plane::display_seats()
 {
 	cout << "COSC1430 PLANE SEATING MAP" << endl;
@@ -115,7 +109,6 @@ void plane::display_seats()
 		}
 		cout << endl;
 	}
-
 	cout << endl;
 
 	cout << "Economy" << endl;
@@ -130,19 +123,15 @@ void plane::display_seats()
 		cout << endl;
 	}
 	cout << endl;
-
-
 }
 
 void plane::book_seat()
 {	
-	/*bool booked = false;*/
 	int user_class;
 	cout << "Which section 1.First Class or 2.Economy" << endl;
 	cin >> user_class;
 
-	/*while(!booked)
-	{*/
+	if(user_class >0 && user_class< 3){
 		int row, col;
 		cout << "Enter the row: ";
 		cin >> row;
@@ -152,19 +141,17 @@ void plane::book_seat()
 		switch (user_class)
 		{
 		case 1:
-			if ((row >= 0 && row <= first_class_rows_) && (col >= 0 && col <= first_class_cols_)) {
+			if (row >= 0 && row <= first_class_rows_ && (col >= 0 && col <= first_class_cols_)) {
 				if (first_class_[row - 1][col - 1].is_booked == false)
 				{
 					first_class_[row - 1][col - 1].status = '*';
 					first_class_[row - 1][col - 1].is_booked = true;
 					cout << "The seat is booked";
-					/*booked = true;*/
 					break;
 				}
 				else
 				{
 					cout << "The seat is unavilable.Please choose another seat." << endl;
-					/*booked = false;*/
 					break;
 				}
 			}
@@ -174,19 +161,17 @@ void plane::book_seat()
 				break;
 			}
 		case 2:
-			if ((row >= 0 && row <= econ_rows_) && (col >= 0 && col <= econ_cols_)) {
+			if (row >= 0 && row <= econ_rows_ && (col >= 0 && col <= econ_cols_)) {
 				if (economy_[row - 1][col - 1].is_booked == false)
 				{
 					economy_[row - 1][col - 1].status = '*';
 					economy_[row - 1][col - 1].is_booked = true;
 					cout << "The seat is booked" << endl;
-					/*booked = true;*/
 					break;
 				}
 				else
 				{
 					cout << "The seat is unavilable.Please choose another seat." << endl;
-					/*booked = false;*/
 					break;
 				}
 			}
@@ -195,67 +180,71 @@ void plane::book_seat()
 				cout << "Not a vaild seat" << endl;
 				break;
 			}
-		default: 
-			cout<< "Wrong Choice." << endl;
-			break;
 		}
+	}
+	else
+	{
+		cout << "Wrong Choice." << endl;
+	}
 		cout << endl;
-		}
+}
 
-	/*}*/
-	
 void plane::check_seat()
 {
 	int user_class;
 	cout << "Which section 1.First Class or 2.Economy" << endl;
 	cin >> user_class;
-	int row, col;
-	cout << "Enter the row: ";
-	cin >> row;
-	cout << "Enter the column: ";
-	cin >> col;
 
-	switch (user_class)
+	if (user_class > 0 && user_class < 3) {
+		int row, col;
+		cout << "Enter the row: ";
+		cin >> row;
+		cout << "Enter the column: ";
+		cin >> col;
+
+		switch (user_class)
+		{
+		case 1:
+			if (row >= 0 && row <= first_class_rows_ && (col >= 0 && col <= first_class_cols_)) {
+				if (first_class_[row - 1][col - 1].is_booked == true)
+				{
+					cout << "The seat is unavaliable." << endl;
+					break;
+				}
+				else
+				{
+					cout << "The seat is avalible." << endl;
+					break;
+				}
+			}
+			else
+			{
+				cout << "Not a vaild seat" << endl;
+				break;
+			}
+		case 2:
+			if (row >= 0 && row <= econ_rows_ && (col >= 0 && col <= econ_cols_)) {
+				if (economy_[row - 1][col - 1].is_booked == true)
+				{
+					cout << "The seat is unavaliable." << endl;
+					break;
+				}
+				else
+				{
+					cout << "The seat is avalible." << endl;
+					break;
+				}
+			}
+			else
+			{
+				cout << "Not a vaild seat" << endl;
+				break;
+			}
+		}
+	}
+	else
 	{
-	case 1:
-		if ((row >= 0 && row <= first_class_rows_) && (col >= 0 && col <= first_class_cols_)) {
-			if (first_class_[row - 1][col - 1].is_booked == true)
-			{
-				cout << "The seat is unavaliable." << endl;
-				break;
-			}
-			else
-			{
-				cout << "The seat is avalible." << endl;
-				break;
-			}
-		}
-		else
-		{
-			cout << "Not a vaild seat"<< endl;
-			break;
-		}
-	case 2:
-		if ((row >= 0 && row <= econ_rows_) && (col >= 0 && col <= econ_cols_)) {
-			if (economy_[row - 1][col - 1].is_booked == true)
-			{
-				cout << "The seat is unavaliable." << endl;
-				break;
-			}
-			else
-			{
-				cout << "The seat is avalible." << endl;
-				break;
-			}
-		}
-		else
-		{
-			cout << "Not a vaild seat"<< endl;
-			break;
-		}
-	default:
 		cout << "Wrong choice." << endl;
-		break;
 	}
 	cout << endl;
 }
@@ -265,44 +254,48 @@ void plane::clear_seat()
 	int user_class;
 	cout << "Which section 1.First Class or 2.Economy" << endl;
 	cin >> user_class;
-	int row, col;
-	cout << "Enter the row: ";
-	cin >> row;
-	cout << "Enter the column: ";
-	cin >> col;
 
-	switch (user_class)
+	if (user_class > 0 && user_class < 3) {
+		int row, col;
+		cout << "Enter the row: ";
+		cin >> row;
+		cout << "Enter the column: ";
+		cin >> col;
+
+		switch (user_class)
+		{
+		case 1:
+			if (row >= 0 && row <= first_class_rows_ && (col >= 0 && col <= first_class_cols_)) {
+				cout << "Cleared seat.";
+				first_class_[row - 1][col - 1].status = '-';
+				first_class_[row - 1][col - 1].is_booked = false;
+				break;
+			}
+			else
+			{
+				cout << "Not a valid seat" << endl;
+				break;
+			}
+		case 2:
+			if (row >= 0 && row <= econ_rows_ && (col >= 0 && col <= econ_cols_)) {
+				cout << "Cleared seat.";
+				economy_[row - 1][col - 1].status = '-';
+				economy_[row - 1][col - 1].is_booked = false;
+				break;
+			}
+			else
+			{
+				cout << "Not a valid seat" << endl;
+				break;
+			}
+		}
+	}
+	else
 	{
-	case 1:
-		if ((row >= 0 && row <= first_class_rows_) && (col >= 0 && col <= first_class_cols_)) {
-			cout << "Cleared seat.";
-			first_class_[row - 1][col - 1].status = '-';
-			first_class_[row - 1][col - 1].is_booked = false;
-			break;
-		}
-		else
-		{
-			cout << "Not a valid seat" << endl;
-			break;
-		}
-	case 2:
-		if ((row >= 0 && row <= econ_rows_) && (col >= 0 && col <= econ_cols_)) {
-			cout << "Cleared seat.";
-			economy_[row - 1][col - 1].status = '-';
-			economy_[row - 1][col - 1].is_booked = false;
-			break;
-		}
-		else
-		{
-			cout << "Not a valid seat" << endl;
-			break;
-		}
-	default:
 		cout << "Wrong choice." << endl;
 	}
 	cout << endl;
 }
-
 
 void plane::clear_all_seats()
 {
@@ -325,11 +318,8 @@ void plane::clear_all_seats()
 	}
 }
 
-
 plane::~plane()
 {
 	delete first_class_;
 	delete economy_;
 }
-
-
